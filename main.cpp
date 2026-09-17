@@ -4,7 +4,6 @@
 #include <vector>
 #include <fstream>
 #include <limits>
-#include <algorithm>
 #include "Todolist.h"
 
 void PrintTasks(const std::vector<Task> &tasks) {
@@ -33,6 +32,14 @@ bool ChangeCorrected(std::vector<Task>& tasks, const unsigned short& currentTask
 	return true;
 }
 
+void RunMenu() {
+	std::cout << "1.Добавить задачу и вывести весь список задач\n";
+	std::cout << "2. Поставить отметку выполнено для задачи по ее id\n";
+	std::cout << "3. Удалить задачу\n";
+	std::cout << "4. Вывести список всех задач\n";
+	std::cout << "5. Выйти из меню\n";
+}
+
 bool DeleteTask(std::vector<Task>& tasks, const unsigned short& currentTaskId) {
 
 	auto it = std::find_if(tasks.begin(), tasks.end(), [currentTaskId](const Task& task) {return task.id == currentTaskId; });
@@ -59,33 +66,32 @@ int main() {
 
 	std::vector<Task> tasks;
 	bool running = true; 
-	std::cout << "1.Добавить задачу и вывести весь список задач\n";
-	std::cout << "2. Выйти из меню\n";
-	std::cout << "3. Поставить отметку выполнено для задачи по ее id\n";
-	std::cout << "4. Удалить задачу\n";
-
+	
 	while (running) {
+		RunMenu();
 		unsigned short choice = ChoiceMenuButton();
 		switch (choice) {
 			case 1:	
 				AddTask(tasks,id);
-				PrintTasks(tasks);
 				break;
 			case 2: 
-				running = false;
-				break;
-			case 3: 
 				unsigned short idForChangeCorrected;
 				std::cout << "Введите id задачи ";
 				std::cin >> idForChangeCorrected; std::cout << '\n';
 				ChangeCorrected(tasks, idForChangeCorrected);
 				break;
-
-			case 4:
+			case 3: 
 				unsigned short idForDelete;
 				std::cout << "Введите id задачи которую хотите удалить ";
-				std::cin >> idForDelete; std::cout<<'\n';
+				std::cin >> idForDelete; std::cout << '\n';
 				DeleteTask(tasks, idForDelete);
+				break;
+
+			case 4:
+				PrintTasks(tasks);
+				break;
+			case 5:
+				running = false;
 				break;
 			default: 
 				std::cout << "Такого пункта нет в меню\n";
