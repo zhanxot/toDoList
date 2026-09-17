@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <limits>
+#include <algorithm>
 #include "Todolist.h"
 
 void PrintTasks(const std::vector<Task> &tasks) {
@@ -29,7 +30,7 @@ bool ChangeCorrected(std::vector<Task>& tasks, const unsigned short& currentTask
 	if (it == tasks.end()) return false;
 
 	it->completed = true;
-
+	return true;
 }
 
 bool DeleteTask(std::vector<Task>& tasks, const unsigned short& currentTaskId) {
